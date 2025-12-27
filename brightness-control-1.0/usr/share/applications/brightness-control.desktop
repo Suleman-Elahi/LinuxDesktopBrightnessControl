@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Brightness Control
+Comment=Slider for Desktop Monitor  Brightness
+Exec=/usr/local/bin/brightness-slider
+Icon=display-brightness
+Terminal=false
+Categories=Utility;Settings;

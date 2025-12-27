@@ -1,0 +1,12 @@
+#!/bin/bash
+CURRENT=$(xrandr --verbose | grep -m 1 -i "Brightness" | awk '{print $2}')
+if [ -z "$CURRENT" ]; then CURRENT=1.0; fi
+START_VAL=$(awk "BEGIN {print $CURRENT * 100}")
+
+zenity --scale --print-partial --min-value=10 --max-value=100 \
+       --value=${START_VAL%.*} --step=1 \
+       --text="Adjust DP-3 Brightness" --title="Brightness" 2>/dev/null | \
+while read CHANGE; do
+    NEW_VAL=$(awk "BEGIN {print $CHANGE / 100}")
+    xrandr --output DP-3 --brightness $NEW_VAL
+done

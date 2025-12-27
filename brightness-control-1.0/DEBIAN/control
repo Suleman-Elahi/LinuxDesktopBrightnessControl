@@ -1,0 +1,7 @@
+Package: brightness-control
+Version: 1.0
+Section: utils
+Priority: optional
+Architecture: all
+Maintainer: Suleman <suleman@1212012.xyz>
+Description: A simple GUI slider using zenity and xrandr to control monitor brightness.
