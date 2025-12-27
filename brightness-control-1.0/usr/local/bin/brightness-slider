@@ -1,12 +1,28 @@
 #!/bin/bash
+
+# 1. Auto-detect the connected display
+# We take the first line that says " connected" and grab the first word (e.g., DP-3, HDMI-1)
+MONITOR=$(xrandr -q | grep " connected" | head -n 1 | awk '{print $1}')
+
+# If no monitor is found, exit safely
+if [ -z "$MONITOR" ]; then
+    zenity --error --text="No connected monitor found!"
+    exit 1
+fi
+
+# 2. Get current brightness for that specific monitor
 CURRENT=$(xrandr --verbose | grep -m 1 -i "Brightness" | awk '{print $2}')
 if [ -z "$CURRENT" ]; then CURRENT=1.0; fi
+
+# 3. Calculate start value (0.7 -> 70)
 START_VAL=$(awk "BEGIN {print $CURRENT * 100}")
 
+# 4. Show Slider
 zenity --scale --print-partial --min-value=10 --max-value=100 \
        --value=${START_VAL%.*} --step=1 \
-       --text="Adjust DP-3 Brightness" --title="Brightness" 2>/dev/null | \
+       --text="Adjusting: $MONITOR" --title="Brightness Control" 2>/dev/null | \
 while read CHANGE; do
+    # 5. Apply brightness to the detected monitor
     NEW_VAL=$(awk "BEGIN {print $CHANGE / 100}")
-    xrandr --output DP-3 --brightness $NEW_VAL
+    xrandr --output "$MONITOR" --brightness $NEW_VAL
 done
