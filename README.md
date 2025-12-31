@@ -31,31 +31,15 @@ sudo apt install ./brightness-control-1.0.deb
 ```
 Once installed, search for **"Brightness Control"** in your application menu and pin it to your favorites/taskbar.
 
-### Option 2: Manual Install
-1. Download `brightness-slider` and make it executable:
+### Option 2: Manual Building Deb File.
+1. Download/Clone the repo and run this in the root folder:
    ```bash
-   chmod +x brightness-slider
+   dpkg-deb --build brightness-control-1.0
    ```
-2. Run it directly:
+2. Install Run it directly:
    ```bash
-   ./brightness-slider
+   sudo dpkg -i brightness-control-1.0.deb
    ```
-
-## Configuration (Important!)
-By default, this script targets the **DP-3** output (DisplayPort). If your monitor is plugged into HDMI or a different port, you need to edit the script.
-
-1. **Find your monitor name:**
-   ```bash
-   xrandr | grep " connected"
-   ```
-   *Example output: `HDMI-1 connected primary...`*
-
-2. **Edit the script:**
-   If you installed via `.deb`, edit the installed file:
-   ```bash
-   sudo nano /usr/local/bin/brightness-slider
-   ```
-   Change `DP-3` to your monitor name (e.g., `HDMI-1` or `eDP-1`).
 
 ## Usage
 1. Click the **Brightness Control** icon in your panel.
